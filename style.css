@@ -1,0 +1,52 @@
+body{
+    background-color:blue;
+    margin:0 auto;
+    text-align: center;
+font-family: 'Raleway', sans-serif;
+}
+.menu a{
+  text-decoration: none;
+  color: black;
+  padding-left: 25px;
+  font-family: 'Raleway', sans-serif;
+}
+.menu{
+  background-color: white;
+  width: 50%;
+  height: 30px;
+  color: red;
+  margin:0 auto;
+
+}
+.shoe{
+  height: 100px;
+  width:  100px;
+
+}
+.container{
+    display: flex;
+    width:80%;
+    margin:0 auto;
+    background-color: White;
+
+}
+.container2{
+    display: flex;
+    width:80%;
+    margin:0 auto;
+    background-color: green;
+
+}
+.product{
+    width:60%;
+    margin:0 auto;
+    background-color: White;
+
+}
+#container2{
+    width:60%;
+    margin:0 auto;
+    margin-top:10%;
+    background-color: green;
+    border: 1px solid black;
+}
