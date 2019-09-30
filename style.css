@@ -1,10 +1,22 @@
 body{
     background-color:blue;
     margin:0 auto;
+
+    font-family: 'Raleway', sans-serif;
+}
+h1{
+  text-align: center;
+  margin:0 auto;
+}
+
+h2{
     text-align: center;
-font-family: 'Raleway', sans-serif;
+}
+form{
+    text-align: center;
 }
 .menu a{
+  text-align: center;
   text-decoration: none;
   color: black;
   padding-left: 25px;
@@ -29,6 +41,21 @@ font-family: 'Raleway', sans-serif;
     margin:0 auto;
     background-color: White;
 
+}
+.containerFit{
+
+  text-align: initial;
+  background-color: white;
+  width:20%;
+  margin:0 auto;
+
+}
+.containerFit2{
+  background-color: white;
+
+
+  width:20%;
+  margin:0 auto;
 }
 .container2{
     display: flex;

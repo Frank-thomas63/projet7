@@ -1,0 +1,9 @@
+<?php
+  require_once "connect.php";
+  if (!empty($_POST)){
+    $name = $_POST['name'];
+    $req = "INSERT INTO `product` (`name`) VALUES ('$name')";
+    $result = $bdd->query($req);
+    var_dump ($result);
+    }
+?>
