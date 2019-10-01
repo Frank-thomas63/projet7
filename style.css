@@ -44,6 +44,7 @@ form{
 }
 .containerFit{
 
+  padding-bottom: 10px;
   text-align: initial;
   background-color: white;
   width:20%;

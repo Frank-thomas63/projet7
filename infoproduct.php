@@ -9,7 +9,7 @@
     <body>
       <h1>Simplon Chaustore</h1>
       <div class="menu">
-        <a href="infoproduct.php">Product</a><a href="stock">Add stock</a><a href="insert.php">Insert product</a>
+        <a href="infoproduct.php">Product</a><a href="stock">Add stock</a><a href="teste1.php">Insert product</a>
       </div>
       <form method="post" name="selectId" action="" onchange="loadPage(this.value);" >
         <select name="id" id="id"  name="choixDoc" >
@@ -64,10 +64,15 @@
                 <input id='stock' name='stock' placeholder="stock"><input class="favorite styled" type="submit" value="stock">
               </p>
 
-          <?php   }
-            require_once 'addstock.php';
+              <?php
+              if (!empty($_POST)){
+                $stock = $_POST['stock'];
+                $requete ='insert into stock (stock) value (:'.$stock.')';
+                $requete_preparee = $bdd->prepare($requete);
+                $requete_preparee->execute($stock);
+              }
 
-           }?>  </form>
+           }}?>  </form>
           </div>
 
         <div class="containerFit2">
@@ -78,6 +83,6 @@
       </div>
 </form>
     </body>
-  
+
 
 </html>

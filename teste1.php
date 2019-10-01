@@ -2,7 +2,7 @@
 <head>
 
 </head>
-
+var_dump($_POST);
 <body>
 <?php require_once 'connect.php';?>
 <h1>Ajout de produit</h1>
@@ -16,7 +16,15 @@
         <input name="rechercher" type="submit" id="rechercher" value="Rechercher" />
       </label></td>
       <td width="369" bgcolor="#CCFF00"><label>
-        <input type="text" id="t_rechercher" name="t_rechercher"  placeholder="Name"  value="<?php if(isset($_POST['name'])){echo $_POST['name'];}?>">
+        <select id="t_rechercher" name="t_rechercher"  placeholder="Name"  selected='<?php $donProduct['name']?>'>
+          <?php
+            //menu déroulant
+            $repProduct = $bdd->query('SELECT * FROM product');
+            while($donProduct = $repProduct->fetch()){
+            ?><option value="<?php echo $donProduct['id']; ?>"><?php echo $donProduct['name']; ?></option><?php
+            }?>
+        </select>
+        <input type="text"   value="<?php if(isset($_POST['name'])){echo $_POST['name'];}?>">
         <span class="Style4">Recherche par nom</span> </label></td>
     </tr>
     <tr>
@@ -24,7 +32,7 @@
         <select name="id" id="id"  selected='<?php $donProduct['name']?>'>
           <?php
             //menu déroulant
-            $repProduct = $bdd->query('SELECT * FROM product');
+            $repProduct = $bdd->query('SELECT name FROM product');
             while($donProduct = $repProduct->fetch()){
             ?><option value="<?php echo $donProduct['id']; ?>"><?php echo $donProduct['name']; ?></option><?php
             }?>
@@ -64,7 +72,7 @@
         <select name="price" id="price"  selected='<?php $donProduct['price']?>'>
         <?php
           //menu déroulant
-          $repPrice = $bdd->query('SELECT price FROM product');
+          $repPrice = $bdd->query('SELECT distinct price FROM product');
           while($donPrice = $repPrice->fetch()){
           ?><option value="<?php echo $donPrice['id']; ?>"><?php echo $donPrice['price']; ?></option><?php
           }?>
@@ -93,11 +101,13 @@
   </table>
   <p> </p>
 </form>
-<? $cn=mysql_connect("localhost","root");
-mysql_select_db("ma_base",$cn);
-$req="select * from  t_client";
-mysql_query($req);
-$res=mysql_query($req,$cn);
+<?php
+
+require_once 'connect.php';
+$req=$bdd->query('select * from product');
+$res=$bdd->query('$req, $bdd');
+
+
 ?>
 <table width="630" align="left" bgcolor="#CCCCCC">
 <tr >
@@ -110,41 +120,46 @@ $res=mysql_query($req,$cn);
 <td width="42">Price</td>
 <td width="42">gender</td>
 </tr>
-<?
+<?php
 $var=0;
-while($row=mysql_fetch_array($res))
+
+  require_once 'connect.php';
+  $reponce= $bdd->prepare('select * from product');
+  $reponce->execute();
+
+while($row = $reponce->fetch());
 {
 
 if ($var==0)
 {
 ?>
 <tr bgcolor="#EEEEEE">
-<td><? echo $row[0];  ?></td>
-<td><? echo $row[1];  ?></td>
-<td><? echo $row[2]  ?></td>
-<td><? echo $row[3]  ?></td>
-<td><? echo $row[4];  ?></td>
-<td><? echo $row[5];  ?></td>
-<td><? echo $row[6]  ?></td>
-<td><? echo $row[7]  ?></td>
+<td><?php echo $row[0];  ?></td>
+<td><?php echo $row[1];  ?></td>
+<td><?php echo $row[2]  ?></td>
+<td><?php echo $row[3]  ?></td>
+<td><?php echo $row[4];  ?></td>
+<td><?php echo $row[5];  ?></td>
+<td><?php echo $row[6]  ?></td>
+<td><?php echo $row[7]  ?></td>
 </tr>
-<?
+<?php
 $var=1;
  }
 else
 {
 ?>
 <tr bgcolor="#FFCCCC">
-  <td><? echo $row[0];  ?></td>
-  <td><? echo $row[1];  ?></td>
-  <td><? echo $row[2]  ?></td>
-  <td><? echo $row[3]  ?></td>
-  <td><? echo $row[4];  ?></td>
-  <td><? echo $row[5];  ?></td>
-  <td><? echo $row[6]  ?></td>
-  <td><? echo $row[7]  ?></td>
+  <td><?php echo $row[0];  ?></td>
+  <td><?php echo $row[1];  ?></td>
+  <td><?php echo $row[3]  ?></td>
+  <td><?php echo $row[2]  ?></td>
+  <td><?php echo $row[4];  ?></td>
+  <td><?php echo $row[5];  ?></td>
+  <td><?php echo $row[6]  ?></td>
+  <td><?php echo $row[7]  ?></td>
 </tr><undefined></undefined>
-<?
+<?php
 $var=0;
  }
  }

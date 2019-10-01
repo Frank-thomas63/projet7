@@ -1,4 +1,5 @@
-<?
+<?php
+require_once 'connect.php';
 $rech=$_POST['t_rechercher'];
 $name=$_POST['name'];
 $category_id=$_POST['category_id'];
@@ -7,15 +8,16 @@ $color_id=$_POST['color_id'];
 $image=$_POST['image'];
 $price=$_POST['price'];
 $gender=$_POST['gender'];
-require_once 'connect.php';
+
 
  if (isset($_POST['rechercher']))
 {
-$req=$bdd->query('select * from  product where nom='$rech);
-$res=$bdd->query($req,$bdd);
-$enrg=$res->fetchColumn();
 
- if ($enrg[0] == $rech)
+$req=$bdd->query('select * from product where name = $rech');
+$res=$bdd->query($req);
+$enrg=$res->rowCount();
+
+ if($enrg[0] == $rech)
 {
 
    echo "<form id='form1' name='form1' method='post' action='teste1.php'>
@@ -76,7 +78,8 @@ $enrg=$res->fetchColumn();
 }
   else
    {
-  echo '<body onLoad="alert('product not found..')">';
+
+  echo '<body onLoad="alert(\'product not found..\')">';
   echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
   }
 }
@@ -84,43 +87,41 @@ $enrg=$res->fetchColumn();
  else
   {
 
-
-
-         if (isset($_POST['ajouter']))
+    if (isset($_POST['ajouter']))
 
            if($name=='')
           {
-         echo '<body onLoad="alert('indispensable product')">';
-                               echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
+          echo '<body onLoad="alert(\'indispensable product\')">';
+          echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
           }
           elseif ($category_id=='')
           {
-          echo '<body onLoad="alert('indispensable category...')">';
-                               echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
+          echo '<body onLoad="alert(\'indispensable category...\')">';
+          echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
           }
           elseif($brand_id=='')
           {
-          echo '<body onLoad="alert('indispensable brand...')">';
-                                   echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
+          echo '<body onLoad="alert(\'indispensable brand...\')">';
+          echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
           }
           elseif ($color_id=='')
           {
-          echo '<body onLoad="alert('indispensable color...')">';
+          echo '<body onLoad="alert(\'indispensable color...\')">';
                                echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
           }
           elseif($image=='')
           {
-          echo '<body onLoad="alert('indispensable image...')">';
+          echo '<body onLoad="alert(\'indispensable image...\')">';
                                    echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
           }
           elseif ($price=='')
           {
-          echo '<body onLoad="alert('indispensable price...')">';
+          echo '<body onLoad="alert(\'indispensable price...\')">';
                                echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
           }
           elseif ($gender=='')
           {
-          echo '<body onLoad="alert('indispensable gender...')">';
+          echo '<body onLoad="alert(\'indispensable gender...\')">';
                                echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
           }
          else
@@ -131,7 +132,7 @@ $enrg=$res->fetchColumn();
 
           $bdd->query($rqt);
 
-            echo '<body onLoad="alert('Ajout effectuée...')">';
+            echo '<body onLoad="alert(\'Ajout effectuée...\')">';
           echo '<meta http-equiv="refresh" content="0;URL=index.php">';
           mysql_close();
                }
@@ -140,24 +141,24 @@ $enrg=$res->fetchColumn();
           if($name=='' || $category_id=='' ||$brand_id=='' ||$color_id=='' ||$image=='' ||$price=='' ||$gender=='' )
           {
 
-          echo '<body onLoad="alert('fair une recherch avant la modification ou verifiez les champs obligatoire...')">';
+          echo '<body onLoad="alert(\'fair une recherch avant la modification ou verifiez les champs obligatoire...\')">';
                                    echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
           }
           else
           {
            $rqt="update product set category_id='$category_id',brand_id='$brand_id',color_id='$color_id',image='$image',price='$price',gender'$gender' where nom ='$rech'";
         $bdd->query($rqt);
-          echo '<body onLoad="alert('Modification effectuée...')">';
+          echo '<body onLoad="alert(\'Modification effectuée...\')">';
           echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
         mysql_close();
          }
        elseif(isset($_POST['supprimer']))
          {
 
-         $rqt="delete  FROM t_client  where nom ='$rech'";
+         $rqt="delete  FROM product  where nom ='$rech'";
 
         mysql_query($rqt);
-         echo '<body onLoad="alert('Suppression effectuée...')">';
+         echo '<body onLoad="alert(\'Suppression effectuée...\')">';
         echo '<meta http-equiv="refresh" content="0;URL=teste1.php">';
         mysql_close();
          }
@@ -166,10 +167,11 @@ $enrg=$res->fetchColumn();
   }
 
 ?>
-<? require_once 'connect.php';
+<?php
+require_once 'connect.php';
 $req="select * from  product";
-$bdd->query($rqt);
-$res=$bdd->query($req,$bdd);
+$bdd->query($req);
+$res=$bdd->query($req);
 ?>
 <table width="630" align="left" bgcolor="#CCCCCC">
 <tr >
@@ -182,43 +184,43 @@ $res=$bdd->query($req,$bdd);
   <td width="42">Price</td>
   <td width="42">gender</td>
 </tr>
-<?
+<?php
 $var=0;
-while($row=$res->fetchColumn())
+while($row=$res->fetch())
 {
 
 if ($var==0)
 {
 ?>
 <tr bgcolor="#EEEEEE">
-  <td><? echo $row[0];  ?></td>
-  <td><? echo $row[1];  ?></td>
-  <td><? echo $row[2]  ?></td>
-  <td><? echo $row[3]  ?></td>
-  <td><? echo $row[4];  ?></td>
-  <td><? echo $row[5];  ?></td>
-  <td><? echo $row[6]  ?></td>
-  <td><? echo $row[7]  ?></td>
+  <td><?php echo $row[0];  ?></td>
+  <td><?php echo $row[1];  ?></td>
+  <td><?php echo $row[3]  ?></td>
+  <td><?php echo $row[2]  ?></td>
+  <td><?php echo $row[4];  ?></td>
+  <td><?php echo $row[5];  ?></td>
+  <td><?php echo $row[6]  ?></td>
+  <td><?php echo $row[7]  ?></td>
 </tr>
-<?
+<?php
 $var=1;
  }
 else
 {
 ?>
 <tr bgcolor="#FFCCCC">
-  <td><? echo $row[0];  ?></td>
-  <td><? echo $row[1];  ?></td>
-  <td><? echo $row[2]  ?></td>
-  <td><? echo $row[3]  ?></td>
-  <td><? echo $row[4];  ?></td>
-  <td><? echo $row[5];  ?></td>
-  <td><? echo $row[6]  ?></td>
-  <td><? echo $row[7]  ?></td>
+  <td><?php echo $row[0];  ?></td>
+  <td><?php echo $row[1];  ?></td>
+  <td><?php echo $row[2]  ?></td>
+  <td><?php echo $row[3]  ?></td>
+  <td><?php echo $row[4];  ?></td>
+  <td><?php echo $row[5];  ?></td>
+  <td><?php echo $row[6]  ?></td>
+  <td><?php echo $row[7]  ?></td>
 </tr>
-<?
+<?php
 $var=0;
  }
- }
+}
 ?>
 </table>
